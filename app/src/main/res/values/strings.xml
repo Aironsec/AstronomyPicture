@@ -6,9 +6,8 @@
     <string name="favourite">favourite</string>
     <string name="settings">settings</string>
     <string name="search">Search</string>
-    <string name="today_chip">Сегодня</string>
-    <string name="random_chip">Случайно</string>
-    <string name="week_chip">Неделя</string>
+    <string name="theme_chip_default">Theme1</string>
+    <string name="theme_chip_my_theme">Theme2</string>
     <string name="play_button_description">Play button</string>
     <string name="todo">TODO</string>
 </resources>

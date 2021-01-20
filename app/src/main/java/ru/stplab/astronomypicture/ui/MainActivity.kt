@@ -2,8 +2,9 @@ package ru.stplab.astronomypicture.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import ru.stplab.astronomypicture.R
+import ru.stplab.astronomypicture.mvvm.viewmodal.PictureOfTheDayViewModel
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,4 +15,5 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, PictureOfTheDayFragment.newInstance())
                 .commitNow()
     }
+
 }

@@ -10,7 +10,7 @@ import ru.stplab.astronomypicture.mvvm.model.entity.PODServerResponseData
 
 class PictureOfTheDayAdapter(private val data: PODServerResponseData) : RecyclerView.Adapter<PictureOfTheDayAdapter.PagerVH>() {
 
-    val pictures = listOf<PODServerResponseData>(data)
+    val pictures = listOf(data)
 
     inner class PagerVH(override val containerView: View) : LayoutContainer,
         RecyclerView.ViewHolder(containerView) {
