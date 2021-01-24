@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import coil.api.load
+import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
 import kotlinx.android.synthetic.main.fragment_earth.*
@@ -39,7 +39,7 @@ class PictureOfTheDayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_earth, container, false)
+        return inflater.inflate(R.layout.fragment_earth_start, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,10 +86,12 @@ class PictureOfTheDayFragment : Fragment() {
                     } else {
                         image_view.load(url) {
                             lifecycle(this@PictureOfTheDayFragment)
+                            crossfade(true)
                             error(R.drawable.ic_load_error_vector)
                             placeholder(R.drawable.ic_no_photo_vector)
                         }
                     }
+                    main.transitionToEnd()
                 }
             }
             is PictureOfTheDayData.Loading -> {

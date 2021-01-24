@@ -60,22 +60,22 @@ class MarsViewPagerFragment : Fragment() {
 
     private fun setMarsTabHighlighted(layoutInflater: LayoutInflater) {
         val mars =
-            layoutInflater.inflate(R.layout.activity_api_custom_tab_mars, null)
+            layoutInflater.inflate(R.layout.fragment_mars_custom_tab_mars, null)
         mars.findViewById<AppCompatTextView>(R.id.tab_image_textview)
             .setTextColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
         tab_layout.getTabAt(MARS)?.customView = mars
         tab_layout.getTabAt(WEATHER)?.customView =
-            layoutInflater.inflate(R.layout.activity_api_custom_tab_weather, null)
+            layoutInflater.inflate(R.layout.fragment_mars_custom_tab_weather, null)
     }
 
     private fun setWeatherTabHighlighted(layoutInflater: LayoutInflater) {
         val weather =
-            layoutInflater.inflate(R.layout.activity_api_custom_tab_weather, null)
+            layoutInflater.inflate(R.layout.fragment_mars_custom_tab_weather, null)
         weather.findViewById<AppCompatTextView>(R.id.tab_image_textview)
             .setTextColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
 
         tab_layout.getTabAt(MARS)?.customView =
-            layoutInflater.inflate(R.layout.activity_api_custom_tab_mars, null)
+            layoutInflater.inflate(R.layout.fragment_mars_custom_tab_mars, null)
         tab_layout.getTabAt(WEATHER)?.customView = weather
     }
 
