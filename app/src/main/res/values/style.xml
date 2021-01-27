@@ -18,6 +18,7 @@
         <item name="materialButtonStyle">@style/AppButton</item>
         <item name="textInputStyle">@style/AppTextField</item>
         <item name="materialCardViewStyle">@style/AppCard</item>
+        <item name="fontFamily">@font/aclonica</item>
     </style>
 
     <style name="AppTheme2" parent="AppTheme">
