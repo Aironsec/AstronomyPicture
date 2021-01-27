@@ -3,13 +3,22 @@ package ru.stplab.astronomypicture.ui.navigation.earth
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.transition.ChangeBounds
+import android.transition.ChangeImageTransform
+import android.transition.TransitionManager
+import android.transition.TransitionSet
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
 import kotlinx.android.synthetic.main.fragment_earth.*
 import ru.stplab.astronomypicture.R
@@ -17,6 +26,8 @@ import ru.stplab.astronomypicture.mvvm.model.PictureOfTheDayData
 import ru.stplab.astronomypicture.mvvm.viewmodal.PictureOfTheDayViewModel
 
 class PictureOfTheDayFragment : Fragment() {
+
+    var isEnlarge = false
 
     companion object {
         fun newInstance() = PictureOfTheDayFragment()
@@ -29,7 +40,7 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.getImageData()
+        viewModel.getImageVideoData()
             .observe(viewLifecycleOwner) {
                 renderData(it)
             }
@@ -49,6 +60,23 @@ class PictureOfTheDayFragment : Fragment() {
             startActivity(Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse("https://en.wikipedia.org/wiki/${input_edit_text.text.toString()}")
             })
+        }
+
+// TODO: 27.01.2021 Почему не срабатывает click??
+        image_view.setOnClickListener {
+            isEnlarge = !isEnlarge
+            TransitionManager.beginDelayedTransition(
+                main, TransitionSet()
+                    .addTransition(ChangeBounds())
+                    .addTransition(ChangeImageTransform())
+            )
+
+            val params: ViewGroup.LayoutParams = image_view.layoutParams
+            params.height =
+                if (isEnlarge) ViewGroup.LayoutParams.MATCH_PARENT else ViewGroup.LayoutParams.WRAP_CONTENT
+            image_view.layoutParams = params
+            image_view.scaleType =
+                if (isEnlarge) ImageView.ScaleType.CENTER_CROP else ImageView.ScaleType.FIT_CENTER
         }
     }
 
@@ -84,14 +112,24 @@ class PictureOfTheDayFragment : Fragment() {
                             loadUrl(url)
                         }
                     } else {
-                        image_view.load(url) {
+                        image_view.load(url){
                             lifecycle(this@PictureOfTheDayFragment)
-                            crossfade(true)
                             error(R.drawable.ic_load_error_vector)
                             placeholder(R.drawable.ic_no_photo_vector)
+                            crossfade(true)
+                            target {
+                                image_view.setImageDrawable(it)
+                                main.transitionToEnd()
+                            }
                         }
+//                        image_view.load(url) {
+//                            lifecycle(this@PictureOfTheDayFragment)
+//                            crossfade(true)
+//                            error(R.drawable.ic_load_error_vector)
+//                            placeholder(R.drawable.ic_no_photo_vector)
+//                        }
                     }
-                    main.transitionToEnd()
+
                 }
             }
             is PictureOfTheDayData.Loading -> {

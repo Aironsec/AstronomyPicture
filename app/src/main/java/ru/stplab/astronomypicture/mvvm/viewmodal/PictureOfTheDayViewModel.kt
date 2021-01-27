@@ -10,8 +10,6 @@ import ru.stplab.astronomypicture.BuildConfig
 import ru.stplab.astronomypicture.mvvm.model.PODRetrofitImpl
 import ru.stplab.astronomypicture.mvvm.model.PictureOfTheDayData
 import ru.stplab.astronomypicture.mvvm.model.entity.PODServerResponseData
-import ru.stplab.astronomypicture.mvvm.view.list.IPictureItemView
-import ru.stplab.astronomypicture.mvvm.viewmodal.list.IPictureListViewPager
 
 class PictureOfTheDayViewModel(
     private val liveDataForViewToObserve: MutableLiveData<PictureOfTheDayData> = MutableLiveData(),
@@ -19,64 +17,12 @@ class PictureOfTheDayViewModel(
 ) :
     ViewModel() {
 
-    class PictureListViewPager() : IPictureListViewPager<IPictureItemView> {
-        override var itemClickListener: ((IPictureItemView) -> Unit)? = null
-
-        val pictures = mutableListOf<PODServerResponseData>()
-
-        override fun bindView(view: IPictureItemView) {
-            val picture = pictures[view.pos]
-            view.loadImage(picture.url)
-        }
-
-        override fun getCount(): Int = pictures.size
-    }
-
-    fun getImageData(): LiveData<PictureOfTheDayData> {
-        sendServerRequestImage()
+    fun getImageVideoData(): LiveData<PictureOfTheDayData> {
+        sendServerRequestImageAndVideo()
         return liveDataForViewToObserve
     }
 
-    fun getAllData(): LiveData<PictureOfTheDayData> {
-        sendServerRequestAll()
-        return liveDataForViewToObserve
-    }
-
-    private fun sendServerRequestAll() {
-        liveDataForViewToObserve.value = PictureOfTheDayData.Loading(null)
-        val apiKey: String = BuildConfig.NASA_API_KEY
-        if (apiKey.isBlank()) {
-            PictureOfTheDayData.Error(Throwable("You need API key"))
-        } else {
-            retrofitImpl.getRetrofitImpl().getPictureAndVideoOfTheDay(apiKey).enqueue(object :
-                Callback<PODServerResponseData> {
-                override fun onResponse(
-                    call: Call<PODServerResponseData>,
-                    response: Response<PODServerResponseData>
-                ) {
-                    if (response.isSuccessful && response.body() != null) {
-                        liveDataForViewToObserve.value =
-                            PictureOfTheDayData.Success(response.body()!!)
-                    } else {
-                        val message = response.message()
-                        if (message.isNullOrEmpty()) {
-                            liveDataForViewToObserve.value =
-                                PictureOfTheDayData.Error(Throwable("Unidentified error"))
-                        } else {
-                            liveDataForViewToObserve.value =
-                                PictureOfTheDayData.Error(Throwable(message))
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<PODServerResponseData>, t: Throwable) {
-                    liveDataForViewToObserve.value = PictureOfTheDayData.Error(t)
-                }
-            })
-        }
-    }
-
-    private fun sendServerRequestImage() {
+    private fun sendServerRequestImageAndVideo() {
         liveDataForViewToObserve.value = PictureOfTheDayData.Loading(null)
         val apiKey: String = BuildConfig.NASA_API_KEY
         if (apiKey.isBlank()) {
