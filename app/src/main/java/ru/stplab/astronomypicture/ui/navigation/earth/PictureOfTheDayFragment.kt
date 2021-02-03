@@ -1,5 +1,6 @@
 package ru.stplab.astronomypicture.ui.navigation.earth
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -21,6 +22,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
 import kotlinx.android.synthetic.main.fragment_earth.*
+import kotlinx.android.synthetic.main.fragment_earth.image_view
+import kotlinx.android.synthetic.main.fragment_earth.input_edit_text
+import kotlinx.android.synthetic.main.fragment_earth.input_layout
+import kotlinx.android.synthetic.main.fragment_earth.main
+import kotlinx.android.synthetic.main.fragment_earth_start.*
 import ru.stplab.astronomypicture.R
 import ru.stplab.astronomypicture.mvvm.model.PictureOfTheDayData
 import ru.stplab.astronomypicture.mvvm.viewmodal.PictureOfTheDayViewModel
@@ -62,7 +68,6 @@ class PictureOfTheDayFragment : Fragment() {
             })
         }
 
-// TODO: 27.01.2021 Почему не срабатывает click??
         image_view.setOnClickListener {
             isEnlarge = !isEnlarge
             TransitionManager.beginDelayedTransition(
@@ -81,6 +86,7 @@ class PictureOfTheDayFragment : Fragment() {
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun renderData(data: PictureOfTheDayData) {
         when (data) {
             is PictureOfTheDayData.Success -> {
@@ -112,7 +118,7 @@ class PictureOfTheDayFragment : Fragment() {
                             loadUrl(url)
                         }
                     } else {
-                        image_view.load(url){
+                        image_view.load(url) {
                             lifecycle(this@PictureOfTheDayFragment)
                             error(R.drawable.ic_load_error_vector)
                             placeholder(R.drawable.ic_no_photo_vector)

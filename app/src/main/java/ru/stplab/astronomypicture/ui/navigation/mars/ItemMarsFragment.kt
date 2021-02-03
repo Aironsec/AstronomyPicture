@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_mars.*
 import ru.stplab.astronomypicture.R
@@ -36,6 +37,9 @@ class ItemMarsFragment : Fragment() {
             if (isExpandMenu) collapsedMenu()
             else expandMenu()
         }
+        chip_cameraRHA.setOnClickListener { collapsedMenu() }
+        chip_cameraNAV.setOnClickListener { collapsedMenu() }
+        transparent_background.setOnClickListener { collapsedMenu() }
     }
 
     private fun expandMenu() {
@@ -49,7 +53,6 @@ class ItemMarsFragment : Fragment() {
             .setListener(object : AnimatorListenerAdapter(){
                 override fun onAnimationEnd(animation: Animator?) {
                     chip_cameraRHA.isClickable = true
-                    chip_cameraRHA.setOnClickListener { collapsedMenu() }
                 }
             })
 
@@ -59,7 +62,6 @@ class ItemMarsFragment : Fragment() {
             .setListener(object : AnimatorListenerAdapter(){
                 override fun onAnimationEnd(animation: Animator?) {
                     chip_cameraNAV.isClickable = true
-                    chip_cameraNAV.setOnClickListener { collapsedMenu() }
                 }
             })
 
@@ -69,7 +71,6 @@ class ItemMarsFragment : Fragment() {
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     transparent_background.isClickable = true
-                    transparent_background.setOnClickListener { collapsedMenu() }
                 }
             })
     }
@@ -85,7 +86,6 @@ class ItemMarsFragment : Fragment() {
             .setListener(object : AnimatorListenerAdapter(){
                 override fun onAnimationEnd(animation: Animator?) {
                     chip_cameraRHA.isClickable = false
-                    chip_cameraRHA.setOnClickListener(null)
                 }
             })
 
@@ -95,7 +95,6 @@ class ItemMarsFragment : Fragment() {
             .setListener(object : AnimatorListenerAdapter(){
                 override fun onAnimationEnd(animation: Animator?) {
                     chip_cameraNAV.isClickable = false
-                    chip_cameraNAV.setOnClickListener(null)
                 }
             })
 
@@ -105,7 +104,6 @@ class ItemMarsFragment : Fragment() {
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     transparent_background.isClickable = false
-                    transparent_background.setOnClickListener(null)
                 }
             })
     }

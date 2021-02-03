@@ -18,4 +18,7 @@
     <string name="mars_rover_curiosity">Curiosity</string>
     <string name="mars_rover_opportunity">Opportunity</string>
     <string name="mars_rover_spirit">Spirit</string>
+    <string name="temperature_weather_mars">Temperature:</string>
+    <string name="temp_250">250</string>
+    <string name="meter_fahrenheit">°F</string>
 </resources>
