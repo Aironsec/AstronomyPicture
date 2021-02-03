@@ -10,13 +10,6 @@ interface PictureOfTheDayAPI {
 
     @GET("planetary/apod")
     fun getPictureOfTheDay(
-        @Query("api_key") apiKey: String,
-        @Query("thumbs") thumbs: Boolean = true/*,
-        @Query("count") count: Int = 3*/
-    ): Call<PODServerResponseData>
-
-    @GET("planetary/apod")
-    fun getPictureAndVideoOfTheDay(
         @Query("api_key") apiKey: String
     ): Call<PODServerResponseData>
 }

@@ -10,4 +10,15 @@
     <string name="theme_chip_my_theme">Theme2</string>
     <string name="play_button_description">Play button</string>
     <string name="todo">TODO</string>
+    <string name="bottom_navigator_earth">Земля</string>
+    <string name="bottom_navigator_mars">Марс</string>
+    <string name="bottom_navigator_settings">Настройки</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mars_rover_curiosity">Curiosity</string>
+    <string name="mars_rover_opportunity">Opportunity</string>
+    <string name="mars_rover_spirit">Spirit</string>
+    <string name="temperature_weather_mars">Temperature:</string>
+    <string name="temp_250">250</string>
+    <string name="meter_fahrenheit">°F</string>
 </resources>
