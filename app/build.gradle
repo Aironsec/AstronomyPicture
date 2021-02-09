@@ -2,6 +2,11 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+androidExtensions {
+    experimental = true
 }
 
 android {
@@ -49,12 +54,27 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
-    implementation("io.coil-kt:coil:0.9.2")
+    implementation "org.koin:koin-android:2.0.1"
+    implementation 'org.koin:koin-androidx-viewmodel:2.0.1'
+    implementation 'org.koin:koin-androidx-scope:2.0.1'
+
+    implementation "androidx.room:room-runtime:2.2.2"
+    implementation "androidx.room:room-rxjava2:2.2.2"
+    kapt "androidx.room:room-compiler:2.2.2"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
+
+    implementation("io.coil-kt:coil:1.1.1")
+
+    implementation 'com.airbnb.android:lottie:2.8.0'
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
