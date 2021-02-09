@@ -32,9 +32,12 @@ class ItemTouchHelperCallback(context: Context, private val adapter: AdapterRVNo
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        var dragFlags = 0
         var swipeFlags = 0
-        if (viewHolder.itemViewType != 0) swipeFlags = ItemTouchHelper.START/* or ItemTouchHelper.END*/
+        if (viewHolder.itemViewType != 0) {
+            swipeFlags = ItemTouchHelper.START/* or ItemTouchHelper.END*/
+            dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        }
         return makeMovementFlags(
             dragFlags,
             swipeFlags

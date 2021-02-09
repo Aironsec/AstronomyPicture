@@ -48,7 +48,6 @@ class ItemNoteMarsFragment : Fragment() {
         viewModel.getNotes
             .observe(viewLifecycleOwner) {
                 adapter.notes = it
-//                adapter.setItems(it)
             }
 
         fab_add_item.setOnClickListener {
