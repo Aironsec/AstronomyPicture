@@ -53,12 +53,12 @@
                 android:id="@+id/web_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/image_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/image_view" />
         </androidx.constraintlayout.motion.widget.MotionLayout>
-
 
     <include layout="@layout/bottom_sheet_layout" />
 

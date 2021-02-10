@@ -18,13 +18,13 @@ import android.transition.ChangeBounds
 import android.transition.ChangeImageTransform
 import android.transition.TransitionManager
 import android.transition.TransitionSet
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -40,7 +40,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.stplab.astronomypicture.R
 import ru.stplab.astronomypicture.mvvm.model.entity.PicturesOfTheDay
 import ru.stplab.astronomypicture.mvvm.viewmodal.PictureOfTheDayViewModel
-import ru.stplab.astronomypicture.util.LoadingState
 import java.util.*
 
 
@@ -70,10 +69,7 @@ class PictureOfTheDayFragment : Fragment() {
             .observe(viewLifecycleOwner) { data ->
                 data?.let { renderData(it) }
             }
-        viewModel.loadingState
-            .observe(viewLifecycleOwner) {
-                renderStatus(it)
-            }
+
         viewModel.bottomSheetState
             .observe(viewLifecycleOwner) {
                 when (it) {
@@ -120,14 +116,6 @@ class PictureOfTheDayFragment : Fragment() {
         }
     }
 
-    private fun renderStatus(state: LoadingState) {
-        when (state.status) {
-            LoadingState.Status.FAILED -> toast(state.msg)
-            LoadingState.Status.RUNNING -> toast("Loading")
-            LoadingState.Status.SUCCESS -> toast("Success")
-        }
-    }
-
     @SuppressLint("SetJavaScriptEnabled", "UseCompatLoadingForDrawables")
     private fun renderData(data: PicturesOfTheDay) {
         val url = data.url
@@ -167,10 +155,9 @@ class PictureOfTheDayFragment : Fragment() {
             bottom_sheet_description.text = Html.fromHtml(descriptionHtml)
         } ?: bottom_sheet_description.text.let { "No Descriptions" }
 
-        if (url.isNullOrEmpty()) {
-            toast("Link is empty")
-        } else {
+        if (!url.isNullOrEmpty()) {
             if (mediaType == "video") {
+                web_view.visibility = View.VISIBLE
                 with(web_view) {
                     clearCache(true)
                     clearHistory()
@@ -207,76 +194,7 @@ class PictureOfTheDayFragment : Fragment() {
         return bitmap
     }
 
-//    @SuppressLint("SetJavaScriptEnabled")
-//    private fun renderData(data: PictureOfTheDayData) {
-//        when (data) {
-//            is PictureOfTheDayData.Success -> {
-//                val serverResponseData = data.serverResponseData
-//                val url = serverResponseData.url
-//                val title = serverResponseData.title
-//                val description = serverResponseData.explanation
-//                val mediaType = serverResponseData.mediaType
-//
-//                title?.let {
-//                    bottom_sheet_title.text = it
-//                } ?: bottom_sheet_title.text.let { "No Title" }
-//
-//                description?.let {
-//                    bottom_sheet_description.text = it
-//                } ?: bottom_sheet_description.text.let { "No Descriptions" }
-//
-//                if (url.isNullOrEmpty()) {
-//                    //showError("Сообщение, что ссылка пустая")
-//                    toast("Link is empty")
-//                } else {
-//                    //showSuccess()
-//                    if (mediaType == "video") {
-//                        with(web_view) {
-//                            clearCache(true)
-//                            clearHistory()
-//                            settings.javaScriptEnabled = true
-//                            settings.javaScriptCanOpenWindowsAutomatically = true
-//                            loadUrl(url)
-//                        }
-//                    } else {
-//                        image_view.load(url) {
-//                            lifecycle(this@PictureOfTheDayFragment)
-//                            error(R.drawable.ic_load_error_vector)
-//                            placeholder(R.drawable.ic_no_photo_vector)
-//                            crossfade(true)
-//                            target {
-//                                image_view.setImageDrawable(it)
-//                                main.transitionToEnd()
-//                            }
-//                        }
-////                        image_view.load(url) {
-////                            lifecycle(this@PictureOfTheDayFragment)
-////                            crossfade(true)
-////                            error(R.drawable.ic_load_error_vector)
-////                            placeholder(R.drawable.ic_no_photo_vector)
-////                        }
-//                    }
-//
-//                }
-//            }
-//            is PictureOfTheDayData.Loading -> {
-//                //showLoading()
-//            }
-//            is PictureOfTheDayData.Error -> {
-//                //showError(data.error.message)
-//                toast(data.error.message)
-//            }
-//        }
-//    }
-
     private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-    }
-
-    private fun toast(string: String?) {
-        Toast.makeText(context, string, Toast.LENGTH_SHORT).apply {
-            setGravity(Gravity.BOTTOM, 0, 440)
-            show()
-        }
     }
 }

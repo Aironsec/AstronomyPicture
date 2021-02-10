@@ -17,11 +17,13 @@ import ru.stplab.astronomypicture.mvvm.model.AppDatabase.Companion.NAME_DB
 import ru.stplab.astronomypicture.mvvm.model.api.PictureOfTheDayAPI
 import ru.stplab.astronomypicture.mvvm.model.dao.PictureDao
 import ru.stplab.astronomypicture.mvvm.model.repository.PictureRepo
+import ru.stplab.astronomypicture.mvvm.viewmodal.MainActivityViewModel
 import ru.stplab.astronomypicture.mvvm.viewmodal.PictureOfTheDayViewModel
 import java.util.concurrent.TimeUnit
 
 val viewModelModule = module {
     single { PictureOfTheDayViewModel(get()) }
+    single { MainActivityViewModel(get()) }
 }
 
 val apiModule = module {
