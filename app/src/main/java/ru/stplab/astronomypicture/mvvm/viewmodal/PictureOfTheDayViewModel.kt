@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import ru.stplab.astronomypicture.mvvm.model.repository.PictureRepo
 import ru.stplab.astronomypicture.util.LoadingState
 
-class PictureOfTheDayViewModel(private val pictureRepo: PictureRepo) : ViewModel() {
+class PictureOfTheDayViewModel(pictureRepo: PictureRepo) : ViewModel() {
 
     private val _bottomSheetState = MutableLiveData(false)
 

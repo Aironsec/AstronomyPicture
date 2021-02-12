@@ -8,9 +8,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import ru.stplab.astronomypicture.R
+import ru.stplab.astronomypicture.mvvm.viewmodal.MarsNoteViewModel
 import kotlin.math.abs
 
-class ItemTouchHelperCallback(context: Context, private val adapter: AdapterRVNote) :
+class ItemTouchHelperCallback(context: Context, private val adapter: MarsNoteViewModel.NoteListViewModal) :
     ItemTouchHelper.Callback() {
 
     private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_delete_24) as Drawable

@@ -16,24 +16,27 @@ import ru.stplab.astronomypicture.mvvm.model.AppDatabase
 import ru.stplab.astronomypicture.mvvm.model.AppDatabase.Companion.NAME_DB
 import ru.stplab.astronomypicture.mvvm.model.api.PictureOfTheDayAPI
 import ru.stplab.astronomypicture.mvvm.model.dao.PictureDao
+import ru.stplab.astronomypicture.mvvm.model.repository.NoteRepo
 import ru.stplab.astronomypicture.mvvm.model.repository.PictureRepo
 import ru.stplab.astronomypicture.mvvm.viewmodal.MainActivityViewModel
+import ru.stplab.astronomypicture.mvvm.viewmodal.MarsNoteViewModel
 import ru.stplab.astronomypicture.mvvm.viewmodal.PictureOfTheDayViewModel
 import java.util.concurrent.TimeUnit
 
 val viewModelModule = module {
     single { PictureOfTheDayViewModel(get()) }
     single { MainActivityViewModel(get()) }
+    single { MarsNoteViewModel(get()) }
 }
 
 val apiModule = module {
     fun providePictureOfTheDayAPI(retrofit: Retrofit) =
         retrofit.create(PictureOfTheDayAPI::class.java)
+
     single { providePictureOfTheDayAPI(get()) }
 }
 
 val netModule = module {
-
     val baseUrl = "https://api.nasa.gov/"
 
     fun provideOkHttpClient() = OkHttpClient.Builder()
@@ -73,7 +76,10 @@ val databaseModule = module {
 }
 
 val repositoryModule = module {
-    fun  providePictureRepo(api: PictureOfTheDayAPI, dao: PictureDao) = PictureRepo (api, dao)
+    fun providePictureRepo(api: PictureOfTheDayAPI, dao: PictureDao) = PictureRepo (api, dao)
+    fun providerNoteRepo() = NoteRepo()
 
     single { providePictureRepo(get(), get()) }
+    single { providerNoteRepo() }
+
 }
